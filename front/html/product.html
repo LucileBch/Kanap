@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+    <!-- n'oublie pas de récupérer le nom du produit ici -->
     <title>Nom du produit</title>
 
     <meta charset="utf-8">
@@ -73,7 +74,8 @@
 
                 <div class="item__content__settings__quantity">
                   <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
-                  <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
+                  <!--Modificiation de la value pour que le choix de quantité commence à 1 et non à 0-->
+                  <input type="number" name="itemQuantity" min="1" max="100" value="1" id="quantity">
                 </div>
               </div>
 
