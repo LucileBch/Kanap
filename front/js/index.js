@@ -1,8 +1,8 @@
 // Appel à l'API qui contient les données avec une requête GET
 async function getDatas() {
-    const res = await fetch('http://localhost:3000/api/products');
+    const res = await fetch('http://localhost:3000/api/products')
     // Spécification du format attendu pour les résultats
-    const datas = await res.json();
+    const datas = await res.json()
 
     // Création d'une boucle FOR...OF pour sélectionner quelles informations, pour chacun des produits, sont à afficher en les appelant via ${}
     for(let data of datas) {
