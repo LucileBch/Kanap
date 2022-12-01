@@ -26,22 +26,28 @@ getDatas()
 
 //--------------- GESTION DU PANIER ---------------
 
-document.querySelector('#addToCart').addEventListener('click', () =>{
-    Je récupère la valeur du input color
-    je récupère la valeur de la quantité
+function addToCart () {
+//J'écoute un évènement au clic sur le bouton d'ajout au panier
+    document.querySelector('#addToCart').addEventListener('click', () => {
+        // Je récupère dans une variabe la valeur de l'input color sélectionné par l'utilisateur
+        const selectedColor = document.querySelector('#colors').value
+        
+        // Je récupère dans une variable la valeur de l'input quantité sélectionné par l'utilisateur
+        const selectedQuantity = document.querySelector('#quantity').value
 
+        // Je teste la couleur pour voir si une couleur est bien sélectionnée, si elle est vide je mets une alerte pour que l'utilisateur choisisse une couleur
+        if (selectedColor === "") {
+            alert ('Une couleur doit être sélectionnée')
 
-    tester la couleur pour voir si vide, si vide mettre une alerte pour que l'utilisateur choisisse une couleur
-
-    tester si quantité inférieure a 1 ou sup à 100 = mettre une alerte
-
-    Si la couleur et la qet valide, lancer une fonction addToCart
-})
-
-//--------------- LOCAL STORAGE ---------------
-
-Pour l'ajout au panier (localstorage)
-
-Si un produit existe déjà = addition de la nouvelle qte a la qte déjà présente
-Attention, il ne doit pas être possible d'avoir plus de 100 produit identique et pas de valeur négative
-NE PAS STOCKER LE PRIX DANS LE localStorage
+        // Je teste la quantité pour voir si elle est inférieur à 1 ou supérieur à 100, si c'est le cas je mets une alerte pour indiquer que la quantité sélectionnée n'est pas autorisée
+        } else if (selectedQuantity < 1 || selectedQuantity > 100) {
+            alert ('La quantité sélectionnée doit être comprise entre 1 et 100')
+        
+        // Si les deux conditions sont validées, j'affiche un message d'ajout du produit au panier
+        } else {
+            alert ('Le produit a été ajouté au panier')
+        }
+    })
+}
+//Lancement de la fonction d'ajout du produit au panier
+addToCart()
