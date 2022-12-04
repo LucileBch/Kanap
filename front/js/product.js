@@ -38,7 +38,7 @@ function addToCart () {
         if (selectedColor === "") {
             alert ('Une couleur doit être sélectionnée')
 
-        // Je teste la quantité pour voir si elle est inférieur à 1 ou supérieur à 100, si c'est le cas je mets une alerte pour indiquer que la quantité sélectionnée n'est pas autorisée
+        // Je teste la quantité pour voir si elle est inférieure à 1 ou supérieure à 100, si c'est le cas je mets une alerte pour indiquer que la quantité sélectionnée n'est pas autorisée
         } else if (selectedQuantity < 1 || selectedQuantity > 100) {
             alert ('La quantité sélectionnée doit être comprise entre 1 et 100')
         
@@ -60,11 +60,11 @@ function addToCart () {
             
             // si le panier contient quelque chose, on test son ID et sa couleur et si c'est la même on ne modifie que la quantité du panier, avec une quantité plafonnée
             } else {
-                let getCartItemColor = cart.find((cartItemColor) => clientItem.id === cartItemColor.id && clientItem.color === cartItemColor.color)
-                if(getCartItemColor) {
-                    let number = parseInt(clientItem.quantity) + parseInt(getCartItemColor.quantity)
-                    if (number < 101 ) {
-                        getCartItemColor.quantity = number
+                let getCartItem = cart.find((cartItem) => clientItem.id === cartItem.id && clientItem.color === cartItem.color)
+                if(getCartItem) {
+                    let totalQuantity = parseInt(clientItem.quantity) + parseInt(getCartItem.quantity)
+                    if (totalQuantity < 101 ) {
+                        getCartItem.quantity = totalQuantity
                         localStorage.setItem('clientItem', JSON.stringify(cart))
                     } else {
                         alert ('La quantité dans le panier nest pas valide')
