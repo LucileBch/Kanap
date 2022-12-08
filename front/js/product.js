@@ -35,6 +35,7 @@ function addToCart () {
         const selectedColor = document.querySelector('#colors').value
         const selectedQuantity = document.querySelector('#quantity').value
         const itemName = document.querySelector('#title').innerHTML
+        const itemImage = document.querySelector('.item__img').innerHTML
 
         if (selectedColor === "") {
             alert ('Une couleur doit être sélectionnée')
@@ -52,6 +53,7 @@ function addToCart () {
             let clientItem = {
                 id : itemId,
                 name : itemName,
+                image : itemImage,
                 color : selectedColor,
                 quantity : selectedQuantity
             }

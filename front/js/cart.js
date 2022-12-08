@@ -2,12 +2,44 @@
 // Test présence de produits dans le local storage avec un ternaire
 // Si le local storage contient des produits, récupération de ces produits
 // Si le local storage est vide, affichage d'un message indicatif
-const cart = JSON.parse(localStorage.getItem('clientItem')) ? JSON.parse(localStorage.getItem('clientItem')) : document.querySelector('#cartAndFormContainer > h1').textContent = 'Votre panier est vide'
+const cartProducts = JSON.parse(localStorage.getItem('clientItem')) ? JSON.parse(localStorage.getItem('clientItem')) : document.querySelector('#cartAndFormContainer > h1').textContent = 'Votre panier est vide'
+console.log(cartProducts)
 
+async function getDatas() {
+    const res = await fetch('http://localhost:3000/api/products')
+    const datas = await res.json()
 
-
+    displayProduct()
+    
+}
+getDatas()
 
 // Récupération des informations des produits présents dans le local storage
+function displayProduct() {
+    for(let cartProduct of cartProducts) {
+        document.querySelector('#cart__items').innerHTML = `
+        <article class="cart__item" data-id="${cartProduct.id}" data-color="${cartProduct.color}">
+            <div class="cart__item__img">${cartProduct.image}</div>
+            <div class="cart__item__content">
+                <div class="cart__item__content__description">
+                    <h2>${cartProduct.name}</h2>
+                    <p>${cartProduct.color}</p>  
+                </div>
+                <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                        <p> Qté : </p>
+                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartProduct.quantity}">
+                    </div>
+                    <div class="cart__item__content__settings__delete">
+                        <p class="deleteItem">Supprimer</p>
+                    </div>
+                </div>
+            </div>
+        </article>`
+    }
+}
+
+
 // Appel de la fonction de récupération du local storage
 // Pour chacun de ces produits, récupération de l'Id dans l'URL
 // Récupérer la réponse en json
