@@ -7,7 +7,7 @@ const itemId = urlSearchParams.get('id')
 // Affichage des informations produits en pointant où l'on souhaite qu'elles apparaissent
 // Récupération des options couleurs grâce à la boucle FOR...OF
 // Lancement de la fonction pour afficher le produit
-async function getDatas(){
+async function getDatas() {
     const res = await fetch('http://localhost:3000/api/products/' + itemId)
     const data = await res.json()
 
@@ -17,7 +17,7 @@ async function getDatas(){
     document.querySelector('#price').innerHTML = data.price
     document.querySelector('#description').innerHTML = data.description
 
-    for(option of data.colors){
+    for(option of data.colors) {
         const color = `<option value="${option}">${option}</option>`
         document.querySelector('#colors').insertAdjacentHTML('beforeend', color)
     }
@@ -26,7 +26,7 @@ getDatas()
 
 //--------------- GESTION DU PANIER ET LOCAL STORAGE---------------
 //Ecoute de l'évènement addToCart au clic sur le bouton d'ajout au panier
-// Récupération des valeurs de l'input color et quantité sélectionnées par l'utilisateur
+// Récupération des valeurs des inputs color et quantité sélectionnées par l'utilisateur
 // Test de la couleur pour voir si une couleur est bien sélectionnée
 // Test de la quantité pour voir si elle est inférieure à 1 ou supérieure à 100
 function addToCart () {
@@ -34,7 +34,8 @@ function addToCart () {
         
         const selectedColor = document.querySelector('#colors').value
         const selectedQuantity = document.querySelector('#quantity').value
-        
+        const itemName = document.querySelector('#title').innerHTML
+
         if (selectedColor === "") {
             alert ('Une couleur doit être sélectionnée')
         } else if (selectedQuantity < 1 || selectedQuantity > 100) {
@@ -50,6 +51,7 @@ function addToCart () {
 
             let clientItem = {
                 id : itemId,
+                name : itemName,
                 color : selectedColor,
                 quantity : selectedQuantity
             }
