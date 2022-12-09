@@ -17,7 +17,7 @@ getDatas()
 // Récupération des informations des produits présents dans le local storage
 function displayProduct() {
     for(let cartProduct of cartProducts) {
-        document.querySelector('#cart__items').innerHTML = `
+        const product = `
         <article class="cart__item" data-id="${cartProduct.id}" data-color="${cartProduct.color}">
             <div class="cart__item__img">${cartProduct.image}</div>
             <div class="cart__item__content">
@@ -36,6 +36,8 @@ function displayProduct() {
                 </div>
             </div>
         </article>`
+
+        document.querySelector('#cart__items').insertAdjacentHTML('beforeend', product)
     }
 }
 
