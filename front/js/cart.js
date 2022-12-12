@@ -13,7 +13,6 @@ function testLocalStorage() {
 }
 testLocalStorage()
 
-
 async function getDatas() {
     for(let cartProduct of cart) {
         let product = {
@@ -50,4 +49,19 @@ async function getDatas() {
     </article>`
     document.querySelector('#cart__items').insertAdjacentHTML('beforeend', display)
     }
+
+    totalQuantity()
 }
+
+//---------------  FONCTIONS QUANTITE TOTAL & PRIX TOTAL ---------------
+function totalQuantity() {
+    const displayTotalQuantity = document.querySelector('#totalQuantity')
+    let totalQuantity = []
+    let total = 0
+    for(let cartProduct of cart) {
+        total += cartProduct.quantity
+    }
+    totalQuantity.push(total)
+    displayTotalQuantity.innerText = total
+}
+
