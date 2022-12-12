@@ -52,17 +52,16 @@ async function getDatas() {
 
     totalQuantity()
     totalPrice()
+    updateQuantity()
 }
 
-//---------------  FONCTIONS QUANTITE TOTAL & PRIX TOTAL ---------------
+//---------------  FONCTIONS QUANTITE TOTALE & PRIX TOTAL ---------------
 function totalQuantity() {
     const displayTotalQuantity = document.querySelector('#totalQuantity')
-    let totalQuantity = []
     let total = 0
     for(let cartProduct of cart) {
         total += cartProduct.quantity
     }
-    totalQuantity.push(total)
     displayTotalQuantity.innerText = total
 }
 
@@ -70,7 +69,6 @@ function totalPrice() {
     const displayTotalPrice = document.querySelector('#totalPrice')
     let getQuantity = document.querySelectorAll('.itemQuantity')
     let getPrices = document.querySelectorAll('.cart__item__content__description')
-
     let totalPrice = 0
     for(let i = 0; i < getPrices.length; i++) {
         totalPrice += parseInt(getPrices[i].lastElementChild.textContent) * getQuantity[i].value
@@ -79,5 +77,25 @@ function totalPrice() {
     displayTotalPrice.innerText = totalPrice
 }
 
+//---------------  FONCTIONS MODIFICATION DU PANIER ---------------
+function updateQuantity() {
+    let newQuantity = document.querySelectorAll('.itemQuantity')
 
-
+    for(let i = 0; i < newQuantity.length; i++) {
+        const updatedQuantity = newQuantity[i]
+        
+        updatedQuantity.addEventListener('change', (e) => {
+            e.preventDefault(e)
+        
+            if(updatedQuantity.value < 1 || updatedQuantity.value > 100) {
+                alert('La quantité sélectionnée doit être comprise entre 1 et 100')
+            } else {
+                newQuantity.innerHTML = `<input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${e.target.value}">`
+                cart[i].quantity = updatedQuantity.value
+                localStorage.setItem('clientItem', JSON.stringify(cart))
+                alert('La quantité produit a été mise à jour dans le panier')
+                location.reload()
+            }
+        })
+    }
+}
