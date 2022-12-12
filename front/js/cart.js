@@ -51,6 +51,7 @@ async function getDatas() {
     }
 
     totalQuantity()
+    totalPrice()
 }
 
 //---------------  FONCTIONS QUANTITE TOTAL & PRIX TOTAL ---------------
@@ -64,4 +65,19 @@ function totalQuantity() {
     totalQuantity.push(total)
     displayTotalQuantity.innerText = total
 }
+
+function totalPrice() {
+    const displayTotalPrice = document.querySelector('#totalPrice')
+    let getQuantity = document.querySelectorAll('.itemQuantity')
+    let getPrices = document.querySelectorAll('.cart__item__content__description')
+
+    let totalPrice = 0
+    for(let i = 0; i < getPrices.length; i++) {
+        totalPrice += parseInt(getPrices[i].lastElementChild.textContent) * getQuantity[i].value
+        console.log(totalPrice)
+    }
+    displayTotalPrice.innerText = totalPrice
+}
+
+
 
