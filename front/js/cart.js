@@ -1,7 +1,7 @@
 //---------------  AFFICHAGE PRODUIT ---------------
 // Test présence de produits dans le local storage
+// Si le local storage contient des produits, appel de la fonction getDatas
 // Si le local storage est vide, affichage d'un message indicatif
-// Si le local storage contient des produits, récupération des infos de ces produits dans le tableau cart
 const cart = JSON.parse(localStorage.getItem('clientItem'))
 
 function testLocalStorage() {
@@ -13,6 +13,9 @@ function testLocalStorage() {
 }
 testLocalStorage()
 
+// Fonction de récupération des informations produits dans l'API et dans le Local Storage
+// Variable "product" dans laquelle on stocke les informations du Local Storage et qui permet d'appeler l'API grâce à l'Id
+// Variable "display" qui permet de déclarer commment l'affichage doit se faire
 async function getDatas() {
     for(let cartProduct of cart) {
         let product = {
@@ -50,12 +53,21 @@ async function getDatas() {
     document.querySelector('#cart__items').insertAdjacentHTML('beforeend', display)
     }
 
+// Appel des fonctions :
+// D'affichage de la quantité totale de produit dans le panier
+// D'affichage du prix total
+// De modification de la quantité d'un produit
     totalQuantity()
     totalPrice()
     updateQuantity()
 }
 
 //---------------  FONCTIONS QUANTITE TOTALE & PRIX TOTAL ---------------
+// Création de la fonction d'affichage du nombre total de produit dans le panier
+// Pointage sur l'élément totalQuantity
+// Déclaration et initialisation de la variable "total"
+// Avec la boucle for...of, incrémentation de la variable "total" avec chaque quantité présente dans le panier
+// Affichage de cette quantité totale dans l'élément pointé
 function totalQuantity() {
     const displayTotalQuantity = document.querySelector('#totalQuantity')
     let total = 0
@@ -65,30 +77,46 @@ function totalQuantity() {
     displayTotalQuantity.innerText = total
 }
 
+// Création de la fonction d'affichage du prix total du panier
+// Pointage sur l'élément "totalPrice"
+// Déclaration des variables "getQuantity" et "getPrice" pour récupérer les données de la page à manipuler
+// Déclaration et initialisation de "totalPrice"
+// Via la boucle FOR, création de l'opération mathématique a effectuée sur chaque produit du panier et incrémentation de la valeur dans la variabel "totalPrice"
+// Affichage de ce prix total dans l'élément pointé
 function totalPrice() {
     const displayTotalPrice = document.querySelector('#totalPrice')
     let getQuantity = document.querySelectorAll('.itemQuantity')
-    let getPrices = document.querySelectorAll('.cart__item__content__description')
+    let getPrice = document.querySelectorAll('.cart__item__content__description')
     let totalPrice = 0
-    for(let i = 0; i < getPrices.length; i++) {
-        totalPrice += parseInt(getPrices[i].lastElementChild.textContent) * getQuantity[i].value
+    for(let i = 0; i < getPrice.length; i++) {
+        totalPrice += parseInt(getPrice[i].lastElementChild.textContent) * getQuantity[i].value
         console.log(totalPrice)
     }
     displayTotalPrice.innerText = totalPrice
 }
 
 //---------------  FONCTIONS MODIFICATION DU PANIER ---------------
+//Fonciton de modification d'une quantité d'un produit
+// Pointage sur l'élément "itemQuantity"
+// Via la boucle FOR, écoute d'un changement de quantité pour chacun des produits présents dans le panier
+// Condition : si la quantité n'est pas compris entre 1 et 100, affichage d'un message d'erreur
+// Si la condition est respectée :
+    // modification du contenu de la page avec la nouvelle quantité
+    // modification de la quantité dans le local storage
+    // message de confirmation de quantité modifiée dans le panier
+    // raffraichissement de la page pour afficher le contenu modifié
 function updateQuantity() {
     let newQuantity = document.querySelectorAll('.itemQuantity')
 
     for(let i = 0; i < newQuantity.length; i++) {
         const updatedQuantity = newQuantity[i]
-        
+    
         updatedQuantity.addEventListener('change', (e) => {
             e.preventDefault(e)
         
             if(updatedQuantity.value < 1 || updatedQuantity.value > 100) {
                 alert('La quantité sélectionnée doit être comprise entre 1 et 100')
+
             } else {
                 newQuantity.innerHTML = `<input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${e.target.value}">`
                 cart[i].quantity = updatedQuantity.value
