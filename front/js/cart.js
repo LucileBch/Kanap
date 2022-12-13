@@ -54,12 +54,14 @@ async function getDatas() {
     }
 
 // Appel des fonctions :
-// D'affichage de la quantité totale de produit dans le panier
-// D'affichage du prix total
-// De modification de la quantité d'un produit
+    // D'affichage de la quantité totale de produit dans le panier
+    // D'affichage du prix total
+    // De modification de la quantité d'un produit
+    // De suppression de produit
     totalQuantity()
     totalPrice()
     updateQuantity()
+    removeItem()
 }
 
 //---------------  FONCTIONS QUANTITE TOTALE & PRIX TOTAL ---------------
@@ -72,7 +74,7 @@ function totalQuantity() {
     const displayTotalQuantity = document.querySelector('#totalQuantity')
     let total = 0
     for(let cartProduct of cart) {
-        total += cartProduct.quantity
+        total += parseInt(cartProduct.quantity)
     }
     displayTotalQuantity.innerText = total
 }
@@ -96,7 +98,7 @@ function totalPrice() {
 }
 
 //---------------  FONCTIONS MODIFICATION DU PANIER ---------------
-//Fonciton de modification d'une quantité d'un produit
+//Fonction de modification d'une quantité d'un produit
 // Pointage sur l'élément "itemQuantity"
 // Via la boucle FOR, écoute d'un changement de quantité pour chacun des produits présents dans le panier
 // Condition : si la quantité n'est pas compris entre 1 et 100, affichage d'un message d'erreur
@@ -110,13 +112,11 @@ function updateQuantity() {
 
     for(let i = 0; i < newQuantity.length; i++) {
         const updatedQuantity = newQuantity[i]
-    
         updatedQuantity.addEventListener('change', (e) => {
             e.preventDefault(e)
         
             if(updatedQuantity.value < 1 || updatedQuantity.value > 100) {
                 alert('La quantité sélectionnée doit être comprise entre 1 et 100')
-
             } else {
                 newQuantity.innerHTML = `<input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${e.target.value}">`
                 cart[i].quantity = updatedQuantity.value
@@ -124,6 +124,31 @@ function updateQuantity() {
                 alert('La quantité produit a été mise à jour dans le panier')
                 location.reload()
             }
+        })
+    }
+}
+
+// Fonction de suppression d'un produit
+// Pointage sur l'élément à écouter
+// Via la boucle FOR, écoute du clic sur chacun des produits présents dans le panier
+// Déclaration et initialisation des variables(Id et couleur) pour cibler le produit à supprimer
+// Filtre du tableau pour en créer un nouveau selon les conditions Id et couleur testées
+// Suppression de l'item dans le Local Storage
+// Message de confirmation de suppression
+// Rafraichissement de la page
+function removeItem() {
+    let deleteItem = document.querySelectorAll('.deleteItem')
+
+    for(let i = 0; i < deleteItem.length; i++) {
+        deleteItem[i].addEventListener('click', (e) => {
+            e.preventDefault(e)
+            let itemId = cart[i].id
+            let itemColor = cart[i].color
+            let cartfilter = cart.filter(cart => cart.id !== itemId || cart.color !== itemColor)
+            let newCart = cartfilter
+            localStorage.setItem('clientItem', JSON.stringify(newCart))
+            alert('Le produit a été supprimé du panier')
+            location.reload()
         })
     }
 }
