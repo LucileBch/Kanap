@@ -152,3 +152,52 @@ function removeItem() {
         })
     }
 }
+
+//---------------  VALIDATION DU FORMULAIRE ---------------
+// Création des RegEx 
+    // Une pour les champs prénom, nom et ville : pas de chiffre
+    // Une pour l'adresse : chiffres suivi de lettres
+    // Une pour l'adresse email : présence du symbole @
+const regexName = /^[a-zA-Zàäâçéèëêïîñöôùüû'-]{3,30}$/
+
+
+// Test des différents champs du formulaire grâce aux Regex concernés
+document.querySelector('#firstName').addEventListener('input', testFirstName)
+    function testFirstName() {
+        if(regexName.test(firstName.value)) {
+            document.querySelector('#firstNameErrorMsg').textContent = " "
+            return true
+        } else {
+            document.querySelector('#firstNameErrorMsg').textContent = 'Le prénom n\'est pas valide'
+            return false
+        }
+    }
+
+document.querySelector('#lastName').addEventListener('input', testLastName)
+    function testLastName() {
+        if(regexName.test(lastName.value)) {
+            document.querySelector('#lastNameErrorMsg').textContent = " "
+            return true
+        } else {
+            document.querySelector('#lastNameErrorMsg').textContent = 'Le nom n\'est pas valide'
+            return false
+        }
+    }
+
+    
+document.querySelector('#city').addEventListener('input', testCity)
+    function testCity() {
+        if(regexName.test(city.value)) {
+            document.querySelector('#cityErrorMsg').textContent = " "
+            return true
+        } else {
+            document.querySelector('#cityErrorMsg').textContent = 'Le nom de la ville n\'est pas valide'
+            return false
+        }
+    }
+
+
+
+//---------------  ENVOI COMMANDE & FORMULAIRE ---------------
+// consituer un tableau objet contact à partir du formulaire et un tableau produits
+
