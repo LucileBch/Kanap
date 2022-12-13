@@ -159,6 +159,7 @@ function removeItem() {
     // Une pour l'adresse : chiffres suivi de lettres
     // Une pour l'adresse email : présence du symbole @
 const regexName = /^[a-zA-Zàäâçéèëêïîñöôùüû'-]{3,30}$/
+const regexAddress = /^[0-9]{1,3}[a-zA-Zàäâçéèëêïîñöôùüû ,'-]{3,30}$/
 
 
 // Test des différents champs du formulaire grâce aux Regex concernés
@@ -184,7 +185,17 @@ document.querySelector('#lastName').addEventListener('input', testLastName)
         }
     }
 
-    
+document.querySelector('#address').addEventListener('input', testAddress)
+    function testAddress() {
+        if(regexAddress.test(address.value)) {
+            document.querySelector('#addressErrorMsg').textContent = " "
+            return true
+        } else {
+            document.querySelector('#addressErrorMsg').textContent = 'L\'adresse n\'est pas valide'
+            return false
+        }
+    }
+
 document.querySelector('#city').addEventListener('input', testCity)
     function testCity() {
         if(regexName.test(city.value)) {
