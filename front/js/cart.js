@@ -133,7 +133,7 @@ const regexAddress = /^[0-9]{1,3}[a-zA-Zàäâçéèëêïîñöôùüû ,'-]{3,
 const regexEmail = /^.+@.+\..+$/
 
 document.querySelector('#firstName').addEventListener('input', testFirstName)
-    function testFirstName() {
+    function testFirstName() {  
         if(regexName.test(firstName.value)) {
             document.querySelector('#firstNameErrorMsg').textContent = ""
             return true
@@ -144,6 +144,7 @@ document.querySelector('#firstName').addEventListener('input', testFirstName)
     }
 
 document.querySelector('#lastName').addEventListener('input', testLastName)
+
     function testLastName() {
         if(regexName.test(lastName.value)) {
             document.querySelector('#lastNameErrorMsg').textContent = ""
@@ -187,3 +188,52 @@ document.querySelector('#email').addEventListener('input', testEmail)
         }
     }
 
+function testForm() {
+    return (
+        testFirstName()
+        && testLastName()
+        && testAddress()
+        && testCity()
+        && testEmail()
+    )
+}
+
+// envoie formulaire si toutes regex OK
+document.querySelector('#order').addEventListener('click', formulaire)
+
+    function formulaire(event) {
+        event.preventDefault()
+        if (testForm() || true) {
+            let contact = {
+                firstName: firstName.value,
+                lastName : lastName.value,
+                address : address.value,
+                city : city.value,
+                email : email.value
+            }
+            
+            let cart = JSON.parse(localStorage.getItem('clientItem'))
+            let products = cart.map(item => item.id)
+
+            numeroCommande(contact, products)
+        }
+    }
+
+async function numeroCommande(contact, products) {
+    let body = { contact, products }
+
+    const post = await fetch('http://localhost:3000/api/products/order', {
+        method : "POST",
+        headers : {
+            'Accept': 'application/json', 
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(body)
+    })
+
+    const res = await post.json()
+
+    const orderId = res.orderId
+
+    window.location.href = `confirmation.html?orderId=${orderId}`
+}
