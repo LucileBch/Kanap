@@ -33,7 +33,7 @@ function addToCart () {
     document.querySelector('#addToCart').addEventListener('click', () => {
         
         const selectedColor = document.querySelector('#colors').value
-        const selectedQuantity = document.querySelector('#quantity').value
+        const selectedQuantity = parseInt(document.querySelector('#quantity').value)
         const itemName = document.querySelector('#title').innerHTML
 
         if (selectedColor === "") {
