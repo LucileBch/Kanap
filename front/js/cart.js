@@ -127,3 +127,63 @@ function updateCart(products, id, color, quantity) {
     total(products)
 }
 
+// regex 
+const regexName = /^[a-zA-Zàäâçéèëêïîñöôùüû'-]{3,30}$/
+const regexAddress = /^[0-9]{1,3}[a-zA-Zàäâçéèëêïîñöôùüû ,'-]{3,30}$/
+const regexEmail = /^.+@.+\..+$/
+
+document.querySelector('#firstName').addEventListener('input', testFirstName)
+    function testFirstName() {
+        if(regexName.test(firstName.value)) {
+            document.querySelector('#firstNameErrorMsg').textContent = ""
+            return true
+        } else {
+            document.querySelector('#firstNameErrorMsg').textContent = 'Le prénom n\'est pas valide'
+            return false
+        }
+    }
+
+document.querySelector('#lastName').addEventListener('input', testLastName)
+    function testLastName() {
+        if(regexName.test(lastName.value)) {
+            document.querySelector('#lastNameErrorMsg').textContent = ""
+            return true
+        } else {
+            document.querySelector('#lastNameErrorMsg').textContent = 'Le nom n\'est pas valide'
+            return false
+        }
+    }
+
+document.querySelector('#address').addEventListener('input', testAddress)
+    function testAddress() {
+        if(regexAddress.test(address.value)) {
+            document.querySelector('#addressErrorMsg').textContent = ""
+            return true
+        } else {
+            document.querySelector('#addressErrorMsg').textContent = 'L\'adresse n\'est pas valide'
+            return false
+        }
+    }
+
+document.querySelector('#city').addEventListener('input', testCity)
+    function testCity() {
+        if(regexName.test(city.value)) {
+            document.querySelector('#cityErrorMsg').textContent = ""
+            return true
+        } else {
+            document.querySelector('#cityErrorMsg').textContent = 'Le nom de la ville n\'est pas valide'
+            return false
+        }
+    }
+
+document.querySelector('#email').addEventListener('input', testEmail)
+    function testEmail() {
+        if(regexEmail.test(email.value)) {
+            document.querySelector('#emailErrorMsg').textContent = ""
+            return true
+        } else {
+            document.querySelector('#emailErrorMsg').textContent = 'L\'adresse email n\'est pas valide'
+            return false
+        }
+    }
+
