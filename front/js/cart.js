@@ -14,8 +14,8 @@ async function getDatas() {
 
     //appel fonction affichage produits du panier
     displayCart(products)
-    modifyQuantity()
-    deleteItem()
+    modifyQuantity(products)
+    deleteItem(products)
 }
 
 //fonction affichage produits du panier
@@ -54,6 +54,7 @@ function displayCart(products) {
 
 //fonction total prix et quantité
 function total(products) {
+    let cart = JSON.parse(localStorage.getItem('clientItem'))
     const displayTotalQuantity = document.querySelector('#totalQuantity')
     let total = 0
     for(let cartProduct of cart) {
@@ -73,29 +74,56 @@ function total(products) {
 }
 
 // fonction modification quantité
-function modifyQuantity() {
+function modifyQuantity(products) {
     let itemQuantities = document.querySelectorAll('.itemQuantity')
 
     itemQuantities.forEach(itemQuantity => {
-        itemQuantity.addEventListener('change', (event) => {            
-            if(itemQuantity.value < 1 || itemQuantity.value > 100) {
+        itemQuantity.addEventListener('change', (event) => {    
+            let cartItem = itemQuantity.closest('.cart__item')
+            let id = cartItem.dataset.id
+            let color = cartItem.dataset.color
+            let quantity = parseInt(itemQuantity.value)
+            if(quantity < 1 || quantity > 100) {
                 alert('La quantité sélectionnée doit être comprise entre 1 et 100')
             } else {
-                // appeler la fonction update cart
+                updateCart(products, id, color, quantity)
             }
         })
     })
 }
 
 // fonction suppression produit
-function deleteItem() {
+function deleteItem(products) {
     let deleteButtons = document.querySelectorAll('.deleteItem')
 
     deleteButtons.forEach(deleteButton => {
         deleteButton.addEventListener('click', (event) => {
-            alert('Le produit a été supprimé du panier')
+            let cartItem = deleteButton.closest('.cart__item')
+            let id = cartItem.dataset.id
+            let color = cartItem.dataset.color
+            cartItem.remove()
+
             // appel de la fonction update cart
+            updateCart(products, id, color, 0)
         })
     })
+}
+
+//fonction update Cart local storage
+function updateCart(products, id, color, quantity) {
+    let cart = JSON.parse(localStorage.getItem('clientItem'))
+
+    if (quantity > 0) {
+        for (let item of cart) {
+            if(item.id === id && item.color === color) {
+                item.quantity = quantity
+            }
+        }
+    } else {
+        cart = cart.filter(item => item.id !== id || item.color !== color)
+    }
+
+    localStorage.setItem('clientItem', JSON.stringify(cart))
+    total(products)
 }
 
