@@ -1,9 +1,10 @@
 // Création d'une fonction asynchrone d'appel à l'API avec une requête GET
+// Parcours du tableau de données avec une boucle FOR...OF pour l'affichage des données
+// Déclaration d'une variable qui pointe l'endroit où afficher les produits
 async function getDatas() {
     const res = await fetch('http://localhost:3000/api/products');
     const datas = await res.json();
     
-    // Parcours du tableau de données avec une boucle FOR...OF pour l'affichage des données
     for(let data of datas) {
         const product =`
         <a href="./product.html?id=${data._id}">
@@ -14,7 +15,6 @@ async function getDatas() {
         </article>
         </a>`;
         
-        // Déclaration d'une variable qui pointe l'endroit où afficher les produits
         const section = document.querySelector("#items");
         section.insertAdjacentHTML("beforeend", product);
     }
