@@ -1,3 +1,4 @@
+//--------------- AFFICHAGE DES PRODUITS ---------------
 // Création d'une fonction asynchrone d'appel à l'API avec une requête GET
 // Parcours du tableau de données avec une boucle FOR...OF pour l'affichage des données
 // Déclaration d'une variable qui pointe l'endroit où afficher les produits
