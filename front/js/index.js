@@ -15,8 +15,8 @@ async function getDatas() {
         </a>`;
         
         // Déclaration d'une variable qui pointe l'endroit où afficher les produits
-        const section = document.querySelector('#items');
-        section.insertAdjacentHTML('beforeend', product);
+        const section = document.querySelector("#items");
+        section.insertAdjacentHTML("beforeend", product);
     }
 }
 
