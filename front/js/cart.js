@@ -266,6 +266,7 @@ function formulaire(event) {
 // Envoi des données à l'API via la requête POST
 // Déclaration et initialisation d'une variable qui contient la réponse (numéro de commande) de l'API
 // Redirection vers la page confiramtion avec l'orderId dans l'URL
+// Suppression des informations contenues dans le local storage
 async function numeroCommande(contact, products) {
     let body = {contact, products};
 
@@ -281,4 +282,5 @@ async function numeroCommande(contact, products) {
     const res = await post.json();
     const orderId = res.orderId;
     window.location.href = `confirmation.html?orderId=${orderId}`;
+    localStorage.clear();
 }
