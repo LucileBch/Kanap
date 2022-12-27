@@ -164,7 +164,7 @@ function updateCart(products, id, color, quantity) {
     // Une pour l'adresse : chiffres suivi de lettres
     // Une pour l'adresse email : présence du symbole @
 // Pointage sur chaque élément du formulaire pour tester les données de l'utilisateur via les RegEx
-const regexName = /^[a-zA-Zàäâçéèëêïîñöôùüû'-]{3,30}$/;
+const regexName = /^[a-zA-Zàäâçéèëêïîñöôùüû -]{3,30}$/;
 const regexAddress = /^[0-9]{1,3}[a-zA-Zàäâçéèëêïîñöôùüû ,'-]{3,30}$/;
 const regexEmail = /^.+@.+\..+$/;
 
